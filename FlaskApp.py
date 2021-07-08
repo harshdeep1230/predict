@@ -13,7 +13,7 @@ from flask import Flask, request
 from flask import Flask, request, jsonify, render_template
 
 app=Flask(__name__)
-pickle_in = open("classifier.pkl","rb")
+pickle_in = open("finalized_model.pkl","rb")
 classifier=pickle.load(pickle_in)
 
 @app.route('/')
@@ -24,15 +24,14 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    '''
-    For rendering results on HTML GUI
-    '''
-    int_features = [x for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    prediction = classifier.predict(final_features)
-
-    
-    return render_template('index.html', prediction_text='The flower belong to species {}'.format(prediction))
+  weight=request.form['weight']
+  length1=request.form['length1'] 
+  length2=request.form['length2'] 
+  length3=request.form['length3'] 
+  height=request.form['height'] 
+  width=request.form['width']
+  prediction = model.predict([[weight,length1,length2,length3,height,width]])
+  return render_template('index.html', prediction_text='fish type  {}'.format(prediction) )
     
     
 
