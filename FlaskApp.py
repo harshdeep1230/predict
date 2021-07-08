@@ -30,7 +30,7 @@ def predict():
   length3=request.form['length3'] 
   height=request.form['height'] 
   width=request.form['width']
-  prediction = model.predict([[weight,length1,length2,length3,height,width]])
+  prediction = classifier.predict([[weight,length1,length2,length3,height,width]])
   return render_template('index.html', prediction_text='fish type  {}'.format(prediction) )
     
     
